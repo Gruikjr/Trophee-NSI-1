@@ -29,6 +29,8 @@
 				"crit_puissance" : 0,
 				"crit_resitance" : 0
 			}
+		},
+		"autre": {
 		}
 	},
 	{
@@ -52,6 +54,8 @@
 				"crit_puissance" : 0,
 				"crit_resitance" : -0.15
 			}
+		},
+		"autre": {
 		}
 	},
 	{
@@ -66,6 +70,8 @@
 			"nom_ajustement"	: null,
 			"Modif stat cible"  : null, 
 			"Modif stat lanceur": null
+		},
+		"autre": {
 		}
 	},
 	{
@@ -80,6 +86,8 @@
 			"nom_ajustement"	: null,
 			"Modif stat cible"  : null,
 			"Modif stat lanceur": null
+		},
+		"autre": {
 		}
 	},
 	{
@@ -103,6 +111,8 @@
 				"crit_puissance" : 0,
 				"crit_resitance" : 0.30
 			}
+		},
+		"autre": {
 		}
 	},
 	{
@@ -136,6 +146,8 @@
 				"crit_puissance" : 0,
 				"crit_resitance" : 0
 			}
+		},
+		"autre": {
 		}
 	},
 	{
@@ -169,6 +181,8 @@
 				"crit_puissance" : 0,
 				"crit_resitance" : 0
 			}
+		},
+		"autre": {
 		}
 	},
 	{
@@ -193,6 +207,8 @@
 				"crit_puissance" : 0,
 				"crit_resitance" : 0
 			}
+		},
+		"autre": {
 		}
 	},
 	{
@@ -226,6 +242,8 @@
 				"crit_puissance" : -20,
 				"crit_resitance" : 10
 			}
+		},
+		"autre": {
 		}
 	},
 	{
@@ -236,20 +254,22 @@
 		"attaque": {
 			"puissance"			: 0,
 			"type"				: "divers",
-			"probabilité_crit"	: 0.3,
+			"probabilité_crit"	: 0.5,
 			"flags"				: null,
 			"nom_ajustement"	: null,
 			"Modif stat cible"  : null,
 			"Modif stat lanceur": null
-			}
+		},
+		"autre": {
+		}
 	},
 	{
 		"nom"			: "Roulette russe",
-		"description"	: "Au moins ce n'est pas un missile...",
+		"description"	: "Au moins ce n'est pas avec un fusil...",
 		"sprite"		: "roulette russe",
 		"animer"		: null,
 		"attaque": {
-			"puissance"			: 0,
+			"puissance"			: 25,
 			"type"				: "divers",
 			"probabilité_crit"	: 0.3,
 			"flags"				: null,
@@ -274,11 +294,14 @@
 				"crit_puissance" : 20,
 				"crit_resitance" : -10
 			}
+		},
+		"autre": {
+			"probabilité_attaque_lanceur": 0.4
 		}
 	},
 	{
 		"nom"			: "Reverse",
-		"description"	: "baisser la défense de l'adversaire et augmenter la votre !",
+		"description"	: "Baisser la défense de l'adversaire et augmenter la votre !",
 		"sprite"		: "reverse",
 		"animer"		: null,
 		"attaque": {
@@ -307,6 +330,8 @@
 				"crit_puissance" : -2,
 				"crit_resitance" : 2
 			}
+		},
+		"autre": {
 		}
 	}
 ]

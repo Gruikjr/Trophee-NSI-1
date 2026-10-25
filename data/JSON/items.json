@@ -17,25 +17,30 @@
 			}
 		},
 		"sprite": "Le chemin de l'image à partir de /data/img/item/ .",
-		"prix": null
+		"prix": null,
+		"autre": {
+			"Clef": "valeur dans attribut_supplementaire[]"
+		}
 	},
 	{
 		"nom": "Teto maigre",
 		"description": "Cette peluche te rappelles ta propre mortalité. La chéchir ne t'apportera rien d'autre qu'un un peu de détermination.",
 		"effets": {
-			"message utilisateur": "force +",
+			"message utilisateur": "Force +",
 			"stats": {
 				"force": 7
 			}
 		},
 		"sprite": "teto.png",
-		"prix": 3
+		"prix": 3,
+		"autre": {
+		}
 	},
 	{
 		"nom": "Peluche d'Hornet",
 		"description": "Le pouvoir de faire crash les serveurs de Steam, entre tes main....",
 		"effets": {
-			"message utilisateur": "offense +",
+			"message utilisateur": "Offense +",
 			"stats": {
 				"force": 6,
 				"magie": 6,
@@ -43,41 +48,50 @@
 			}
 		},
 		"sprite": "hornet.png",
-		"prix": 7
+		"prix": 7,
+		"autre": {
+		}
 	},
 	{
 		"nom": "Le masque de pierre",
 		"description": "Tu sentirais presque une sorte de sang fantôme dessus.",
 		"effets": {
 			"message utilisateur": "Régénération",
-			"regen": 5,
 			"stats": {
 			}
 		},
 		"sprite": "masque de pierre.png",
-		"prix": 10
+		"prix": 10,
+		"autre": {
+			"pourcentage_guerit": 0.1
+		}
 	},
 	{
 		"nom": "Coupon",
-		"description": "Promos généralisées.",
+		"description": "",
 		"effets": {
 			"message utilisateur": "C'est les soldes!",
 			"stats": {
 			}
 		},
 		"sprite": "coupon.png",
-		"prix": 12
+		"prix": 12,
+		"autre": {
+			"reduction": 0.25
+		}
 	},
 	{
-		"nom" : "corbeille",
+		"nom" : "Corbeille",
 		"description" : "tu appele ça un casque? ",
 		"effets" : {
-			"message utilisateur" : "augmente la defense",
+			"message utilisateur" : "Défense +",
 			"stats" : {
 				"defense" : 8
 			}
 		},
 		"sprite" : "corbeille.png",
-		"prix" : 12
+		"prix" : 12,
+		"autre": {
+		}
 	}
 ]

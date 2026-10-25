@@ -342,11 +342,18 @@ def shop() -> None:
         for liste_abscisses in ABSCISSES_RELATIVE_ITEMS
     ])
     
+    items_shop : list[Item] = []
+    
     # choisit 2 ou 3 items au hasard
-    def nouv_items() -> list[Item]:
+    def nouveaux_items():
+        items_shop.clear()
         gen_item = Item.generateur_items(consecutifs_differents=True)
-        return [next(gen_item) for _ in range(random.randint(2, 3))]
-    items_shop : list[Item] = nouv_items()
+        
+        for _ in range(random.randint(2, 3)):
+            items_shop.append(next(gen_item))
+            for item_joueur in joueur.inventaire:
+                item_joueur.nouveau_item_shop(items_shop[-1])
+    nouveaux_items()
     
     bouton_sortie : Bouton = Bouton(
         (
@@ -358,8 +365,7 @@ def shop() -> None:
     )
     
     interruption : Optional[bool|Interruption] = None
-    for item_joueur in joueur.inventaire:
-        item_joueur.nouveau_shop(items_shop)
+    
     
     # Affiche les avertissments si besoin
     rafraichir_ecran_shop(
@@ -378,7 +384,7 @@ def shop() -> None:
         for ev in pygame.event.get():
             interruption = reagir_appui_touche_shop(ev, items_shop, (0, len(ABSCISSES_ITEMS) - 1))
             if interruption is not None:
-                items_shop = nouv_items()
+                nouveaux_items()
             
             if ev.type == pygame.MOUSEWHEEL and bool(params.mode_debug):
                 dbg_shop_scroll(ev, items_shop, ABSCISSES_ITEMS[len(items_shop)])

@@ -10,11 +10,12 @@ from Carte        import Carte, Attaque
 class ItemInterfaceMethodes:
     nouveau_tour : None|Callable[[Item            , dict[str, Any]], None] = None
     nouvel_etage : None|Callable[[Item            , dict[str, Any]], None] = None
-    nouveau_shop : None|Callable[[Item, list[Item], dict[str, Any]], None] = None
     
-    carte_jouee          : None|Callable[[Item, Carte       , dict[str, Any]], None] = None
-    porteur_subit_dmg    : None|Callable[[Item, Attaque, int, dict[str, Any]], None] = None
-    adversaire_subit_dmg : None|Callable[[Item, Attaque, int, dict[str, Any]], None] = None    # on attend un id
+    carte_jouee          : None|Callable[[Item, Carte                 , dict[str, Any]], None] = None
+    porteur_subit_dmg    : None|Callable[[Item, Optional[Attaque], int, dict[str, Any]], None] = None
+    adversaire_subit_dmg : None|Callable[[Item, Optional[Attaque], int, dict[str, Any]], None] = None    # on attend un id
+    
+    nouvel_item_shop : None|Callable[[Item, Item, dict[str, Any]], None] = None
     
     attributs_supplementaires : dict[str, Any] = field(default_factory=dict)
 
@@ -23,7 +24,6 @@ class Item:
     DONNEES_ITEMS      : ClassVar[list[dict]]      = []
     ORDONEE_SPRITE     : ClassVar[int]             = Fenetre.pourcentage_hauteur(10)
     DIMENSIONS_SPRITES : ClassVar[tuple[int, int]] = (350, 350)
-    REDUCTION_PROMO    : ClassVar[float]           = .8
     
     callbacks : dict[str, ItemInterfaceMethodes] = {}       # v. fonctions_item.py
     
@@ -61,6 +61,7 @@ class Item:
         self.interface : ItemInterfaceMethodes = ItemInterfaceMethodes()
         if self.nom in Item.callbacks.keys():
             self.interface = Item.callbacks[self.nom]
+        self.interface.attributs_supplementaires = item["autre"]
         
         self.effet_affiche  = item["effets"]["message utilisateur"]
         self.stats_changees = Stat.depuis_dictionnaire_json(item["effets"]["stats"], valeur_par_defaut=0)
@@ -134,10 +135,7 @@ class Item:
     
     @property
     def prix(self) -> int:
-        prix = self._prix
-        if self.en_promo:
-            prix = int(prix * Item.REDUCTION_PROMO)
-        return prix
+        return self._prix
     
     @prix.setter
     def prix(self, val : int) -> None:
@@ -215,23 +213,23 @@ class Item:
         if callback is not None:
             callback(self, self.interface.attributs_supplementaires)
     
-    def nouveau_shop(self, items_du_shop : list[Item]) -> None:
-        """Appelé a chaque nouveau combat même le shop."""
-        callback = self.interface.nouveau_shop
-        if callback is not None:
-            callback(self, items_du_shop, self.interface.attributs_supplementaires)
-    
     def carte_jouee(self, carte : Carte) -> None:
         callback = self.interface.carte_jouee
         if callback is not None:
             callback(self, carte, self.interface.attributs_supplementaires)
     
-    def porteur_subit_dmg(self, attaque : Attaque, id_porteur : int) -> None:
+    def porteur_subit_dmg(self, attaque : Optional[Attaque], id_porteur : int) -> None:
         callback = self.interface.porteur_subit_dmg
         if callback is not None:
             callback(self, attaque, id_porteur, self.interface.attributs_supplementaires)
     
-    def adversaire_subit_dmg(self, attaque : Attaque, id_adversaire : int) -> None:
+    def adversaire_subit_dmg(self, attaque : Optional[Attaque], id_adversaire : int) -> None:
         callback = self.interface.adversaire_subit_dmg
         if callback is not None:
             callback(self, attaque, id_adversaire, self.interface.attributs_supplementaires)
+    
+    def nouveau_item_shop(self, item : Item) -> None:
+        """Appelé a chaque nouveau combat même le shop."""
+        callback = self.interface.nouvel_item_shop
+        if callback is not None:
+            callback(self, item, self.interface.attributs_supplementaires)

@@ -7,12 +7,20 @@ auteur : Dooheli, Lecodeurenretard, hibou509
 from Carte import *
 
 
-def quitte_ou_double_jouee(self : Carte, attr : dict[str, Any]) -> None:
-    if random.random() <= 0.4:
+def quitte_ou_double_jouee_avant(self : Carte, attr_sup : dict[str, Any]) -> None:
+    if not self._attaque._crit:
+        self._attaque._puissance = 0
+
+def roulette_russe_jouee_avant(self : Carte, attr_sup : dict[str, Any]):
+    if random.random() <= attr_sup["probabilité_attaque_lanceur"]:
         self._attaque._cible_id = self._attaque._lanceur_id
     self._attaque.cible.recoit_degats(self._attaque.calculer_degats(), self._attaque)
 
-
 callbacks : dict[str, CarteInterfaceMethodes]  = {
-    "quitte ou double" : CarteInterfaceMethodes(jouee=quitte_ou_double_jouee)
+    "quitte ou double": CarteInterfaceMethodes(
+        jouee_avant=quitte_ou_double_jouee_avant,
+    ),
+    "Roulette russe": CarteInterfaceMethodes(
+        jouee_avant=roulette_russe_jouee_avant,
+    ),
 }

@@ -359,12 +359,18 @@ class Entite(ABC):
         self._id = -1
     
     # attaque_cause est là pour la compatibilité avec les boss.
-    def recoit_degats(self, degats_recu : int, attaque_cause : Attaque) -> None:
+    def recoit_degats(self, degats_recu : int, attaque_cause : Optional[Attaque]) -> None:
+        """
+        Reçoit tant de dégat.
+        attaque_cause n'est qu'a titre informatif. Si sa valeur est None, on supposera que les dégats viennent d'un item.
+        """
         self._stats.baisser_vie(degats_recu)
         
         for item in self._inventaire:
             item.porteur_subit_dmg(copy(attaque_cause), self._id)
         
+        if attaque_cause is None:
+            return
         for item in attaque_cause.lanceur._inventaire:
             item.adversaire_subit_dmg(copy(attaque_cause), self._id)
     
@@ -512,7 +518,7 @@ class Entite(ABC):
         )
     
     def ajouter_modif_stats(self, stat : Stat, valide_pendant : int) -> None:
-        """Ajoute une modification de stats valable pendant `valide_pendant` tours."""
+        """Ajoute une modification de stats valable pendant `valide_pendant` tours. Si valide_pendant == -1, La modification dure le temps du combat."""
         tour = Jeu.nb_tours_combat + valide_pendant
         if valide_pendant == -1:
             tour = -1

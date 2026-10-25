@@ -47,9 +47,14 @@ Est exécuté à chaque fois que le boss reçoit une attaque (ou soin, dans ce c
 ## L'interface des cartes
 Utilisée dans [fonctions_cartes.py](../sources/fonctions_cartes.py).
 
-Il est possible de programmer un seul callbacks:
+Il est possible de programmer deux callbacks:
 ```Python
-def jouee(self : Carte, attr : dict[str, Any]) -> None:
+def jouee_avant(self : Carte, attr : dict[str, Any]) -> None:
+```
+Est exécuté juste avant l'application des dégats sur l'entité cible.
+
+```Python
+def jouee_apres(self : Carte, attr : dict[str, Any]) -> None:
 ```
 Est exécuté juste après l'application des dégats sur l'entité cible.
 
@@ -70,22 +75,16 @@ def nouvel_etage(self : Item, attr : dict[str, Any]) -> None:
 Est exécuté à chaque nouvel étage, juste après que l'entité détenteur de l'item ait repioché.
 
 ```Python
-def nouveau_shop(self : Item, items_du_shop : list[Item], attr : dict[str, Any]) -> None:
-```
-Est exécuté avant que le joueur rentre dans le shop.
-`items_du_shop` est une référence sur la liste des items du shop, ainsi modifier un de ces items modifiera celui qui sera dans le shop.
-
-```Python
 def carte_jouee(self : Item, carte : Carte, attr : dict[str, Any]) -> None:
 ```
 Est exécuté juste avant que le porteur de l'item joue sa carte.
 Encore une fois, `carte` est passée par référence.
 
 ```Python
-def porteur_subit_dmg(self : Item, attaque : Attaque, id_porteur : int, attr : dict[str, Any]) -> None:
+def porteur_subit_dmg(self : Item, attaque : Optional[Attaque], id_porteur : int, attr : dict[str, Any]) -> None:
 ```
 Quand le porteur de l'item reçoit une attaque.
-Le paramètre `attaque` est copié.
+Le paramètre `attaque` est copié. Si `attaque` est None alors un item a causé les dégats.
 
 > _rappel:_ On peut obtenir une entité depuis son ID avec `Entite.vivants()[id]`.  
 Le joueur est toujours d'ID `EntiteJSON.INDEX_JOUEUR` et on peut y accéder par la variable globale `joueur` mais attention le joueur n'est pas forcément le porteur de l'item et il devrait marcher pareil peut importe son porteur. Il serait légitime de séprarer seulement si l'item fait une opération propre au joueur comme la gestion d'argent.
@@ -96,3 +95,9 @@ def adversaire_subit_dmg(self : Item, attaque : Attaque, id_adversaire : int, at
 Même chose que `porteur_subit_dmg()` mais est appelé quand le porteur frappe un adversaire.
 
 > _note:_ Si le lanceur s'attaque lui-même (avec un soin par exemple), cette fonction sera quand même appelée et sera exécutée après `porteur_subit_dmg()`.
+
+```Python
+def nouvel_item_shop(self : Item, item : Item, attr : dict[str, Any]) -> None:
+```
+Est exécuté lorsque `item` est mit à vendre au shop.
+`item` est une référence (mutable) sur celui qui sera ajouté au shop.

@@ -8,7 +8,8 @@ from Attaque import *
 
 @dataclass
 class CarteInterfaceMethodes:
-    jouee : None|Callable[[Carte, dict[str, Any]], None] = None
+    jouee_avant : None|Callable[[Carte, dict[str, Any]], None] = None
+    jouee_apres : None|Callable[[Carte, dict[str, Any]], None] = None
     attributs_supplementaires : dict[str, Any] = field(default_factory=dict)
 
 @dataclass(frozen=True)
@@ -389,9 +390,12 @@ class Carte:
             self.dessiner(num_couche)
             
             if animation_en_cours == CarteAnimEtat.JOUER:
+                self.jouee_avant()
+                
                 self.jouer_sfx()
                 self._attaque.appliquer()
-                self.jouee()
+                
+                self.jouee_apres()
                 return      # La carte ne doit plus être dessinée après
            
             if not animation_ecrasee:
@@ -463,8 +467,14 @@ class Carte:
     def dans_hitbox(self, pos : pos_t) -> bool:
         return self._hitbox.collidepoint(pos_t_vers_tuple(pos))
     
-    def jouee(self) -> None:
-        """Appelée quand la carte est jouée."""
-        callback = self.interface.jouee
+    def jouee_avant(self) -> None:
+        """Appelée juste avant que les dégats soient appliqués."""
+        callback = self.interface.jouee_avant
         if callback is not None:
             callback(self, self.interface.attributs_supplementaires)
+
+    def jouee_apres(self) -> None:
+            """Appelée juste après que les dégats soient appliqués."""
+            callback = self.interface.jouee_apres
+            if callback is not None:
+                callback(self, self.interface.attributs_supplementaires)

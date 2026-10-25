@@ -31,17 +31,21 @@ format:
 ------------------------------------
 -->
 _____
-## Amélioration de l'API des boss.
+## Les cartes et les items sont (enfin) implémentés.
 + Changements majeurs
-	- Ajout de l'attribut JSON "autres_attributs" pour apporter des données supplémentaire au boss (évite de les hardcoder dans fonctions_boss).
-		* Ajout du membre dans `BossJSON` et est servi lors de l'initialisation de `attributs_supplementaires[]`.
+	- Changements dans l'API Carte:
+		* Le simple `jouee` est remplacé par deux méthodes plus précises `jouee_avant` et `jouee_apres`.
+	- Changements dans l'API Item:
+		* `nouveau_shop` est remplacé par `nouvel_item_shop`.
+	- Tous les callbacks pour les cartes et les items sont implémetés.
 + Sur plusieurs fichiers
 + Structure de fichiers
 + READMEs et documentation
-	- Ajout du binaire dans le README.
 + Interactions joueur/testeur
-	- Le démon change bien tout les 2 tours.
 + Correction de bugs
-	- Les boutons pour cherche le boss et le shop cherchent à partir du combat suivant et n'excluent plus le dernier combat.
-+ `Stat`
-	- Ajout de la méthode `.copier()` qui permet la copie en place d'un autre objet `Stat`.
++ [cartes.json](data/JSON/cartes.json) et [items.json](data/JSON/items.json)
+	- Ajout de champs "autre", il correspond à `self.interface.attribut_supplmentaires`.
+	- `.recoit_degat()`: `attaque_cause` est devenue falcultative.
++ `Entite`
++ `Item`
+	- Le système de promomotions n'est plus géré par la classe mais seulement par l'item "Coupon" avec l'API.

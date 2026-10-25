@@ -1,5 +1,5 @@
 """
-Contient la classe Mostre et MonstreJSON.
+Contient la classe Monstre et MonstreJSON.
 projet : L'ascension de Esquimot
 auteur : Dooheli, Lecodeurenretard, hibou509
 """
