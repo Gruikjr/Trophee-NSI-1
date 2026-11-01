@@ -8,7 +8,9 @@ from Carte import *
 
 
 def quitte_ou_double_jouee_avant(self : Carte, attr_sup : dict[str, Any]) -> None:
-    if not self._attaque._crit:
+    if self._attaque._crit:
+        self._attaque._puissance *= 2
+    else:
         self._attaque._puissance = 0
 
 def roulette_russe_jouee_avant(self : Carte, attr_sup : dict[str, Any]):

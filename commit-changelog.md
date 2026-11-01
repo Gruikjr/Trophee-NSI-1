@@ -31,21 +31,23 @@ format:
 ------------------------------------
 -->
 _____
-## Les cartes et les items sont (enfin) implémentés.
+## Implémentation des boss (sauf MST) + Meilleure pioche
 + Changements majeurs
-	- Changements dans l'API Carte:
-		* Le simple `jouee` est remplacé par deux méthodes plus précises `jouee_avant` et `jouee_apres`.
-	- Changements dans l'API Item:
-		* `nouveau_shop` est remplacé par `nouvel_item_shop`.
-	- Tous les callbacks pour les cartes et les items sont implémetés.
+	- Implémentation Démon/Prêtre
+		* Ajout d'un fichier pour leurs decks.
+		* Ajustement stats
+	- Sauf si (mal?)chanceux, le joueur ne peut pas piocher plus de 3 fois la même carte.
 + Sur plusieurs fichiers
 + Structure de fichiers
+	- Ajouts de [lancer_jeu.bat](lancer_jeu.bat) et [lancer_jeu.sh](lancer_jeu.sh) pour un lancement plus facile de la par des non-dev.
+	- Ajout d'un script pour installer les composants necessaires.
 + READMEs et documentation
 + Interactions joueur/testeur
+	- Ajustement des stats modifiées par les cartes.
+	- "Quitte ou Double" double les dégats infligés si crit.
 + Correction de bugs
-+ [cartes.json](data/JSON/cartes.json) et [items.json](data/JSON/items.json)
-	- Ajout de champs "autre", il correspond à `self.interface.attribut_supplmentaires`.
-	- `.recoit_degat()`: `attaque_cause` est devenue falcultative.
-+ `Entite`
-+ `Item`
-	- Le système de promomotions n'est plus géré par la classe mais seulement par l'item "Coupon" avec l'API.
++ API Boss
+	- Ajout de `.init()` pour allèger `.nouveau_tour()`
++ `Pool`
+	- Ajout de `._indice_enleve_un()` et `.enleve_un()`.
+	- `.tirer_n()` se fait remplacer par `.tirer_un()`.

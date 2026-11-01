@@ -62,21 +62,6 @@
 		"nom": "Démon",
 		"sprite" : "demon.png",
 		"moveset_boss": [
-			{
-				"nom"		 : "Torgnole",
-				"poids"		 : 7,
-				"soustraire" : null
-			},
-			{
-				"nom"		 : "Little shield",
-				"poids"		 : 5,
-				"soustraire" : null
-			},
-			{
-				"nom"		 : "Soin",
-				"poids"		 : 2,
-				"soustraire" : null
-			}
 		],
 		"rang": 2,
 		"moveset_joueur": null,
@@ -99,17 +84,17 @@
 				"defense"			: 70,
 				"magie"				: 25,
 				"defense_magique"	: 40,
-				"crit_puissance"	: 1.4,
+				"crit_puissance"	: 1.5,
 				"crit_resitance"	: 1.4
 			},
 			"stats_mg": {
 				"vie_max"			: 120,
 				"force"				: 15,
-				"defense"			: 70,
+				"defense"			: 50,
 				"magie"				: 50,
 				"defense_magique"	: 80,
 				"crit_puissance"	: 1.4,
-				"crit_resitance"	: 1.4
+				"crit_resitance"	: 1.5
 			}
 		}
 	},

@@ -61,7 +61,7 @@ class Pool:
         return [obj.nom for obj in self.pool]
     
     def _depuis_donnees_json(self, liste_json : list[dict]) -> None:
-        SOUSTRAIT_DEFAUT : float= 1
+        SOUSTRAIT_DEFAUT : float = 1
         self.pool = [
             Pool.PoolObj(
                 dico["nom"],
@@ -71,42 +71,44 @@ class Pool:
             for dico in liste_json
         ]
     
-    def tirer_n(self, n : int, filtre : Callable[[str], bool]|None = None) -> list[str]:
+    def _indice_enleve_un(self, indice : int) -> None:
+        """Enlève un exemplaire de l'élément à l'indice indice de self.pool."""
+        self.pool[indice].poids -= 1
+        if self.pool[indice].poids <= 0:
+            self.pool.pop(indice)
+    
+    def tirer_un(self, filtre : Callable[[str], bool]|None = None, defaut_filtre : str = "") -> str:
         """
-        Tire n éléments de la pool, si filtre() est fournie ne tire une carte c que si filtre(c) == True.
-        S'il n'y a pas assez d'élément dans la pool, élève une IndexError.
+        Pioche et enlève une instance d'un élément au hasard dans la pool suivant le filtre, si filtre est None ne restreint pas la pioche.
+        filtre() peut être appelé plusieurs fois pour le même élément et peut être appelé sur des éléments de la pool non tirés.
+        filtre() a 95% de chance d'être respecté, s'il ne l'est pas pas renvoie default_filtre et en enlève un de la pool.
+        Si la pool est vide élève une IndexError. Si le filtre renvoie faux pour tous les éléments de la pool, ne termine jamais.
         """
-        if n <= 0:
-            return []
+        if len(self.pool) == 0:
+            raise IndexError("La pool est vide!")
         if filtre is None:
             filtre = lambda nom: True # Accepte tout
         
-        # filtre() n'est pas garantit de renvoyer le même résultat
-        # s'il est appelé plusieurs fois avec les même arguments.
-        obj_filtres = [
-            (i, obj.poids)
-            for i, obj in enumerate(self.pool)
-            if filtre(obj.nom)
-        ]
-        index_filtres = [idex  for idex, _  in obj_filtres]
-        poids_filtres = [poids for _, poids in obj_filtres]
+        population = [(i, nom) for (i, (nom, _)) in enumerate(self)]
         
-        try:
-            indices_tires = random.choices(index_filtres, weights=poids_filtres, k=n)
-        except IndexError:   # La pool n'a pas assez d'objets
-            raise IndexError(f"La pool n'a pas assez d'éléments pour le tirage.")
+        indice, choix = random.choices(population, self._poids)[0]
+        # J'ai calculé que pour tirer toute la population avec un probabilité d'au moins p,
+        # il faut au moins ln(1 - p) / ln(1 - 1/k) tirages (avec k la taille de la population)
+        # Avec une regression linéaire, j'ai trouvé que si 0 <= x < 1 alors 1/ln x ⋍ .7 + (1.05) / (x - 1)
+        ln_p = -2.99573 # ln(1 - 0.95)
+        ln_k_inv = .7 - 1.05 * sum(self._poids)    # comme x = 1 - 1/k, 1 / ln x ⋍ ...
+        # note: on a bien ln_k_inv < 0 car sum(self._poids) > .66
+        for _ in range(round(ln_p * ln_k_inv)):
+            if filtre(choix):
+                break
+            indice, choix = random.choices(population, self._poids)[0]
         
-        tirages = []
-        pool = copy(self.pool)  # shallow copy pour éviter les problèmes de décalage d'indice
-        for i in indices_tires:
-            obj = pool[i]
-            
-            obj.poids -= obj.soustraire     # baisse la probabilité d'apparaitre
-            if obj.poids <= 0:
-                self.pool.pop(i)
-            tirages.append(pool[i].nom)
+        if not filtre(choix):
+            self.enleve_un(defaut_filtre)
+            return defaut_filtre
         
-        return tirages
+        self._indice_enleve_un(indice)
+        return choix
     
     def vider(self) -> list[str]:
         res = []
@@ -118,4 +120,11 @@ class Pool:
         
         self.pool = []
         return res
-    
+        
+    def enleve_un(self, element : str) -> None:
+        """Enlève un exemplaire de element de la pool. Si element n'est pas dans la pool ne fait rien."""
+        try:
+            indice = self.noms.index(element)
+            self._indice_enleve_un(indice)
+        except ValueError:
+            ...

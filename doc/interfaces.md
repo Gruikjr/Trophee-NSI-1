@@ -24,7 +24,12 @@ Bien qu'en Python il soit possible de créer des attributs dynamiquement, la sol
 ## L'interface des boss
 Utilisée dans [fonctions_boss.py](../sources/fonctions_boss.py).
 
-Il est possible de programmer trois callbacks differents:
+Il est possible de programmer quatre callbacks differents:
+```Python
+def init(self : Monstre, attr : dict[str, Any]) -> None:
+```
+Est exécuté juste après le constructeur.
+
 ```Python
 def nouveau_tour(self : Monstre, attr : dict[str, Any]) -> None:
 ```
@@ -35,12 +40,12 @@ def choisir_atk(self : Monstre, attr : dict[str, Any]) -> int:
 ```
 Séléctionne une attaque dans la main du monstre, renvoie l'index de la carte à utiliser dans la main (la main est accessible via `self._cartes_main[]`).
 
-> _note:_ Si ce callback est utilisé pour juste exécuter du code avant le choix de l'attaque, l'expression `Monstre.choisir_index_carte_main(self)` renvoie l'index qui serait normalement choisit.
+> _note:_ Si ce callback est utilisé pour juste exécuter du code avant le choix de l'attaque, l'expression `Monstre.choisir_index_carte_main(self)` renvoie l'indice utilisé si cette méthode n'était pas définie.
 
 ```Python
 def subir_dmg(self : Monstre, degats_recu : int, attaque_cause : Attaque, attr : dict[str, Any]) -> None:
 ```
-Est exécuté à chaque fois que le boss reçoit une attaque (ou soin, dans ce cas `degat_recu` sera négatif).
+Est exécuté à chaque fois que le boss reçoit une attaque (ou soin, dans ce cas `degat_recu` sera négatif). Si défini, se charge de baisser la vie du boss.
 
 > _note:_ L'instruction `Monstre.recoit_degats(self, degats_recu, attaque_cause)` permet de recevoir les dégats comme ils le seraient normalement.
 
@@ -61,7 +66,7 @@ Est exécuté juste après l'application des dégats sur l'entité cible.
 ## L'interface des items
 Utilisée dans [fonctions_items.py](../sources/fonctions_items.py).
 
-Les callbacks sont traités dans l'ordre de rammassages des items de la part de l'entité. Prenons pour instance, une situation où le joueur achète item1 puis item2 au shop, les callbacks d'item1 serons appelés avant ceux d'item2.
+Les callbacks sont traités dans l'ordre de rammassages des items de la part de l'entité. Prenons pour instance, une situation où le joueur achète un item A puis un autre item B au shop, les callbacks de A serons appelés avant ceux de B.
 
 Il est possible de programmer six callbacks differents:
 ```Python

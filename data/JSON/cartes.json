@@ -46,7 +46,7 @@
 			"Modif stat cible": null,
 			"Modif stat lanceur": {
 				"duree"			: 2,
-				"vie_max"		: -1,
+				"vie_max"		: -5,
 				"force"			: 0,
 				"defense"		: 0,
 				"magie"			: 0,
@@ -187,7 +187,7 @@
 	},
 	{
 		"nom"			: "Little shield",
-		"description"	: "Augmentez votre defense !",
+		"description"	: "Augmentez votre defense pour 3 tours",
 		"sprite"		: "little shield",
 		"animer"		: null,
 		"attaque": {
@@ -198,7 +198,7 @@
 			"nom_ajustement"	: null,
 			"Modif stat cible"  : null,
 			"Modif stat lanceur": {
-				"duree"			: -1,
+				"duree"			: 3,
 				"vie_max"		: 0,
 				"force"			: -1,
 				"defense"		: 3,
@@ -222,25 +222,16 @@
 			"probabilité_crit"	: 0.3,
 			"flags"				: null,
 			"nom_ajustement"	: null,
-			"Modif stat cible"  : {
-				"duree"			: -1,
-				"vie_max"		: 0,
-				"force"			: 0,
-				"defense"		: 3,
-				"magie"			: 0,
-				"defense_magique": 0,
-				"crit_puissance" : -20,
-				"crit_resitance" : 10
-			},
+			"Modif stat cible"  : null,
 			"Modif stat lanceur": {
-				"duree"			: -1,
+				"duree"			: 5,
 				"vie_max"		: 0,
-				"force"			: 0,
-				"defense"		: 0,
-				"magie"			: 0,
-				"defense_magique": 0,
-				"crit_puissance" : -20,
-				"crit_resitance" : 10
+				"force"			: -20,
+				"defense"		: 15,
+				"magie"			: -20,
+				"defense_magique": 15,
+				"crit_puissance" : 0,
+				"crit_resitance" : 0
 			}
 		},
 		"autre": {
@@ -275,24 +266,24 @@
 			"flags"				: null,
 			"nom_ajustement"	: null,
 			"Modif stat cible"  : {
-				"duree"			: -1,
+				"duree"			: 0,
 				"vie_max"		: 0,
 				"force"			: 0,
 				"defense"		: 0,
 				"magie"			: 0,
 				"defense_magique": 0,
-				"crit_puissance" : 20,
-				"crit_resitance" : -10
+				"crit_puissance" : 1.2,
+				"crit_resitance" : 0
 			},
 			"Modif stat lanceur": {
-				"duree"			: -1,
+				"duree"			: 0,
 				"vie_max"		: 0,
 				"force"			: 0,
 				"defense"		: 0,
 				"magie"			: 0,
 				"defense_magique": 0,
-				"crit_puissance" : 20,
-				"crit_resitance" : -10
+				"crit_puissance" : 1.2,
+				"crit_resitance" : 0
 			}
 		},
 		"autre": {
@@ -313,12 +304,12 @@
 			"Modif stat cible"  : {
 				"duree"			: -1,
 				"vie_max"		: 0,
-				"force"			: 2,
+				"force"			: 0,
 				"defense"		: -4,
 				"magie"			: 0,
 				"defense_magique": -4,
-				"crit_puissance" : 2,
-				"crit_resitance" : -2
+				"crit_puissance" : 0,
+				"crit_resitance" : -0.3
 			},
 			"Modif stat lanceur": {
 				"duree"			: -1,
@@ -327,8 +318,8 @@
 				"defense"		: 6,
 				"magie"			: 0,
 				"defense_magique": 6,
-				"crit_puissance" : -2,
-				"crit_resitance" : 2
+				"crit_puissance" : -0.3,
+				"crit_resitance" : 1
 			}
 		},
 		"autre": {

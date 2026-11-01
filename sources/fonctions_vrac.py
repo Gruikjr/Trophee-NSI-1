@@ -4,7 +4,6 @@ projet : L'ascension de Esquimot
 auteur : Dooheli, Lecodeurenretard, hibou509
 """
 from import_var import *
-from Jeu import Jeu
 from classes_utiles.Animation import valeurs_regulieres_entre_01
 
 
@@ -95,6 +94,7 @@ def terminer_generateur[S](gen : Generator[Any, S, Any], a_envoyer : S = None) -
     """
     Exécute `gen` tant qu'il n'est pas fini.
     N'appelle PAS `Jeu.commencer_frame()` donc la condition de sortie ne doit pas dépendre sur une variable globale non modifiée par la fonction.
+    Si le générateur ne termine jamais, crée une boucle infinie.
     """
     while True:
         try:

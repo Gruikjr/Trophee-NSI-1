@@ -6,21 +6,19 @@ Le joueur a aussi accès à un shop qui lui permet d'acheter des items pouvant m
 ## Jouer au jeu
 Le moyen le plus facile de jouer est d'obtenir la dernière version stable dans l'onglet "release" à droite dans la page Github (seulement pour Windows).
 
-Si votre machine n'est pas sur Windows (macOs, distribution Linux, ...) ou que vous projetez de modifier le code source, suivez les instructions suivantes.  
-Pour jouer au jeu, il faut avoir Python les dépendances installées comme indiqué dans [la prochaine section](#configuration-minimum), si vous savez pas comment faire suivez les indications dans [Installer.md](Installer.md).
+Vous pouvez aussi lancer depuis le code source. [Installez Python](https://python.org) et lancez [install.bat](install.bat) (pour Windows).
 
-Une fois prêt, lancer le jeu en double-cliquant sur [sources/main.py](sources/main.py) ou en le lançant depuis la ligne de commande si Tkinter n'est pas disponible (il l'est sur Windows et mac).
+Vous pouvez désormais jouer en double-cliquant [lancer_jeu.bat](lancer_jeu.bat) (Windows).
 
 ## Les touches
 Les touches sont dans [Touches.md](Touches.md).
 
 ## Configuration minimum
 + [Python 3.14.2](https://www.python.org/downloads/release/python-3142/) ou plus récent
-	- TKinter, installé par défaut sur Windows, Mac et _la plupart_ des systèmes UNIX.
-		* Si Tkinter n'est pas disponible (sur Linux Mint par exemple), il faudra le jeu dans le terminal car certaines informations seront communiquées par la console.
-+ [Pygame 2.6](https://www.pygame.org/news) ou plus récent
 
 Pas de configuration minimum pour les composants du PC à moins que ce soit littéralement une patate.
+
+TKinter n'est pas necessaire pour lancer le jeu mais est recommandé.
 
 ## Crédits
 Jeu produit pour Les Trophées de NSI par:

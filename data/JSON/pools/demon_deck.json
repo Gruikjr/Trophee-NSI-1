@@ -1,0 +1,41 @@
+{
+	"physique": [
+		{
+			"nom": "Torgnole",
+			"poids": 10,
+			"soustraire": null
+		},
+		{
+			"nom": "Roulette russe",
+			"poids": 10,
+			"soustraire": null
+		},
+		{
+			"nom": "Choc éléctrique",
+			"poids": 10,
+			"soustraire": null
+		}
+	],
+	"magique": [
+		{
+			"nom": "Skip",
+			"poids": 8,
+			"soustraire": null
+		},
+		{
+			"nom": "Little shield",
+			"poids": 10,
+			"soustraire": null
+		},
+		{
+			"nom": "Pacifiste",
+			"poids": 2,
+			"soustraire": null
+		},
+		{
+			"nom": "Reverse",
+			"poids": 10,
+			"soustraire": null
+		}
+	]
+}

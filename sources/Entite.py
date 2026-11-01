@@ -415,6 +415,8 @@ class Entite(ABC):
         """Pioche jusqu'à remplir la main."""
         if self._cartes_main_max <= 0:
             return
+        if len(self._deck_rempli) == 0:
+            return
         
         def filtre(nom : str) -> bool:
             """Empèche le surplus de carte dans une main."""
@@ -422,23 +424,27 @@ class Entite(ABC):
                 return True
             # Empèche de piocher deux fois la même carte d'affilé.
             res = (nom != self._nom_derniere_carte_piochee)
-            self._nom_derniere_carte_piochee = nom
             return res
         
-        noms_cartes = []
+        noms_cartes : list[str] = []
         try:
-            noms_cartes = self._deck.tirer_n(
-                self._cartes_main_max - len(self._cartes_main),
-                filtre=filtre,
-            )
-        except IndexError:   # plus aucune de cartes
+            for _ in range(self._cartes_main_max - len(self._cartes_main)):
+                # Les cartes Skip par défaut sont "gratuites" et n'appartiennent pas à la pool.
+                noms_cartes.append(
+                    self._deck.tirer_un(
+                        filtre=filtre,
+                        defaut_filtre="Skip",
+                    )
+                )
+                self._nom_derniere_carte_piochee = noms_cartes[-1]
+        except IndexError:   # plus de cartes
             noms_cartes = self._deck.vider()
             self._reset_deck_soft()
             self.piocher()
         
         # Sécurité pour le except
         if len(self._cartes_main) + len(noms_cartes) > self.cartes_main_max:
-            noms_cartes = noms_cartes[0:self.cartes_main_max- len(self._cartes_main)]
+            noms_cartes = noms_cartes[0:self.cartes_main_max - len(self._cartes_main)]
         
         for nom in noms_cartes:
             self._ajouter_carte_main(nom)

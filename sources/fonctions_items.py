@@ -13,7 +13,6 @@ def _masque_de_pierre_nouveau_tour(self : Item, attr_sup : dict[str, Any]) -> No
         return
     
     guerit : float = attr_sup["pourcentage_guerit"] * joueur.stats_totales.vie_max
-    print(guerit)
     joueur.recoit_degats(
         -round(guerit),
         None

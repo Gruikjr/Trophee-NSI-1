@@ -68,7 +68,7 @@ class Monstre(Entite):
         """
         if len(pool) == 0:
             raise ValueError("La pool est vide.")
-        nom_monstre = pool.tirer_n(1)
+        nom_monstre = pool.tirer_un()
         
         monstre = Monstre(
             MonstreJSON(

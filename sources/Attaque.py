@@ -164,13 +164,13 @@ class Attaque:
         """Cherche l'attaque avec le nom correspondant dans _liste."""
         try:
             return Attaque(
-                [   # Recherche le nom
-                    i
+                next(   # Recherche le nom, il n'y a surprenament pas de meilleur moyen directement intégré aux listes/séquences
+                    i   # https://github.com/python/cpython/issues/113773
                     for i, att in enumerate(Attaque._liste)
                     if nom == att["nom"]
-                ][0]
+                )
             )
-        except IndexError:
+        except StopIteration:
             raise ValueError(f"L'attaque \"{nom}\" n'a pas été trouvée.")
     
     @property
@@ -273,8 +273,8 @@ class Attaque:
         
         if self._crit:
             crit_facteur : float = stats_attaquant.crit_puissance / max(stats_victime.crit_resitance, .01)  # on évite la division par 0
-            crit_facteur = max(1, crit_facteur) # un crit ne doit jamais baisser les dégats de l'attaque
-            degats *= Attaque._PUISSANCE_CRIT * crit_facteur
+            crit_facteur = max(1, Attaque._PUISSANCE_CRIT * crit_facteur) # un crit ne doit jamais baisser les dégats de l'attaque
+            degats *= crit_facteur
         
         return self._ajustement_degats(degats, self._crit)
     

@@ -60,7 +60,7 @@ class BossJSON:
             donnees["autres_attributs"],
             {},
         )
-        
+    
     @staticmethod
     def actualiser_donnees() -> None:
         """Actualise DONNEES_TYPES[]."""
@@ -96,13 +96,16 @@ class Boss(Monstre):
         )
         self._deck_joueur = boss_json.deck_joueur
         self._pos_sprite  = boss_json.pos_sprite
-        self.callbacks.attributs_supplementaires = deepcopy(boss_json.autres_attributs)
         
         if self._nom not in boss_callbacks:
             raise AssertionError(
                 f"Le boss avec le nom `{self._nom}` n'a pas d'objet BossMethodeWrapper associé.\n"
                 "Il faut remplir l'entrée du dictionnaire dans fonctions_boss.py."
             )
+        
+        self.callbacks.attributs_supplementaires = deepcopy(boss_json.autres_attributs)
+        if self.callbacks.init is not None:
+            self.callbacks.init(self, self.callbacks.attributs_supplementaires)
     
     @staticmethod
     def spawn_boss(etage : Optional[int] = None) -> None:
